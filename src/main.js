@@ -6,6 +6,9 @@ import router from './router'
 import '../static/js/rem.js'
 import Mint from 'mint-ui';
 import 'mint-ui/lib/style.css';
+import store from './store'
+import Cookies from 'js-cookie';
+Vue.prototype.Cookies = Cookies
 Vue.use(Mint);
 import { Swipe, SwipeItem } from 'mint-ui';
 Vue.component(Swipe.name, Swipe);
@@ -16,6 +19,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+    store,
   components: { App },
   template: '<App/>'
 })

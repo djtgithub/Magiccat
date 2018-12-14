@@ -67,6 +67,7 @@ ul,li{
   left: 0;
   box-sizing: border-box;
   border-top: 1px solid #ccc;
+      background: #fff;
 }
 .tabbar ul{
   display: flex;

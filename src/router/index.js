@@ -9,6 +9,7 @@ import other from '@/pages/other/other';
 import error from '@/pages/error/error';
 import Home from '@/pages/home/home';
 import Login from '@/pages/login/login';
+import Yindao from '@/pages/yindao/yindao';
 Vue.use(Router)
 
 const router = new Router({
@@ -36,8 +37,12 @@ const router = new Router({
         }
 
         ]
+    },{
+       path:'/yindao',
+       name:'Yindao',
+       component: Yindao
     },
-      {
+     {
       path: '/login',
       name: 'Login',
       component: Login

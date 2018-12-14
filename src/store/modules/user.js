@@ -4,11 +4,11 @@ const user = {
 	state:{
         token:Cookies.get('Token'),
         login:Cookies.get('Login'),
-	}
+	},
 
 	//状态值的改变方法，操作值
 	//提交mutiadtions是更改vuex状态的唯一方法
-	mutiations:{
+	mutations:{
 		SET_TOKEN:(state,token)=>{
 			state.token=token; //loading
 		},

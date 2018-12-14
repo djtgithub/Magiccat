@@ -5,11 +5,11 @@ const app = {
         loading:Cookies.get('Loading'),
         header:Cookies.get('Header'),
         tabbar:Cookies.get('Tabbar')
-	}
+	},
 
 	//状态值的改变方法，操作值
 	//提交mutiadtions是更改vuex状态的唯一方法
-	mutiations:{
+	mutations:{
 		SET_LOADING:(state,loading)=>{
 			state.loading=loading; //loading
 		},

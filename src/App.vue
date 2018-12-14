@@ -1,19 +1,30 @@
 <template>
   <div id="app">
-    <Header></Header>
+    <Header ></Header>
     <router-view />   
-    <!-- <Tabbar></Tabbar> -->
+    <Yindao v-if="this.$store.state.app.loading==='true'"></Yindao>
   </div>
 </template>
 
 <script>
   import Header from '@/components/common/header';
-  import Tabbar from '@/components/common/tabbar';
+  import Yindao from '@/pages/yindao/yindao';
 export default {
   name: 'App',
+  data(){
+    return {
+       yindao:this.$store.state.app.loading
+    }
+   
+  },
   components:{
        Header,
-       // Tabbar
+      },
+      methods:{
+        
+      },mounted(){
+        // this.yindao=this.$store.state.app.loading;
+        // console.log(this.$store.state.app.loading)
       }
 }
 </script>
