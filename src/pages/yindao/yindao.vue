@@ -20,7 +20,6 @@
 export default {
  methods:{
         add:function(){
-          console.log(this.$store)
            this.$store.commit('SET_LOADING',false);
            this.Cookies.set('Loading',false);
         }
