@@ -10,6 +10,7 @@ import error from '@/pages/error/error';
 import Home from '@/pages/home/home';
 import Login from '@/pages/login/login';
 import Yindao from '@/pages/yindao/yindao';
+import Message from '@/pages/message/message';
 Vue.use(Router)
 
 const router = new Router({
@@ -17,23 +18,29 @@ const router = new Router({
     {
       path: '/',
       component:Home,
+       meta:{keepAlive:true},
         children:[
              {
             path:'/',
             component:Jishi,
+             redirect:'/jishi',
+
         },
            {
             path:'jishi',
             component:Jishi,
+            meta:{index:0,keepAlive:true},
         },
 
         {
             path:'fanyu',
             component:Fanyu,
+            meta:{index:1,keepAlive:true},
         },
         {
             path:'wo',
             component:Wo,
+            meta:{index:2,keepAlive:true},
         }
 
         ]
@@ -67,6 +74,10 @@ const router = new Router({
       path: '/wo',
       name: 'Wo',
       component: Wo
+    },{
+      path:'/message',
+      name:'Message',
+      component:Message
     },{
     	path:'/other',
     	name: 'other',

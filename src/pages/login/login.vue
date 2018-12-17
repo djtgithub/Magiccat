@@ -17,7 +17,7 @@
         </div>
         <div class="golink">
           <router-link to="/register">我要注册</router-link>
-          <router-link to="/forgotpwd">我要注册</router-link>
+          <router-link to="/forgotpwd">忘记密码</router-link>
         </div>
         <div class="btn">
           <mt-button type="primary" class="mint-button mint-button--primary mint-button--large">登录</mt-button>

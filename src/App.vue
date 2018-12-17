@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <Header ></Header>
-    <router-view />   
+
+    <transition :name="transitionName" > 
+        <router-view class="child-view"/>  
+    </transition>
     <Yindao v-if="this.$store.state.app.loading==='true'"></Yindao>
   </div>
 </template>
@@ -13,7 +16,8 @@ export default {
   name: 'App',
   data(){
     return {
-       yindao:this.$store.state.app.loading
+       yindao:this.$store.state.app.loading,
+       transitionName: 'slide-right'  // 默认动态路由变化为slide-right
     }
    
   },
@@ -25,7 +29,9 @@ export default {
       },mounted(){
         // this.yindao=this.$store.state.app.loading;
         // console.log(this.$store.state.app.loading)
-      }
+      },watch: {
+　  }
+
 }
 </script>
 
@@ -39,6 +45,10 @@ export default {
 }
 *{
   margin: 0;padding: 0;
+  font-size: 0.2rem;
+}
+a{
+  text-decoration: none;
 }
 ul,li{
   list-style: none;
@@ -50,5 +60,41 @@ ul,li{
   text-align: center;
   color: #2c3e50;
 }
+.child-view{
+/*     margin: 300px auto;  */
+　　width: 100%; 
+　　height: 100%; 　　transition: all .5s cubic-bezier(.55,0,.1,1); 
+}
 
+/*路由切换动画*/
+/* .fade-enter-active, .fade-leave-active {
+transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to / .fade-leave-active below version 2.1.8 / {
+opacity: 0.2;
+} */
+.slide-right-enter-active,
+.slide-right-leave-active,
+.slide-left-enter-active,
+.slide-left-leave-active {
+  will-change: transform;
+  transition: all 500ms;
+  position: absolute;
+}
+.slide-right-enter {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+}
+.slide-right-leave-active {
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
+}
+.slide-left-enter {
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
+}
+.slide-left-leave-active {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+}
 </style>

@@ -1,5 +1,5 @@
 <template lang="html">
-  <div>
+  <div  style="background: #fff;">
     <div class="home_header">
       <div class="home_header_l">
         <i class="iconfont iconmap">&#xe60f;</i>

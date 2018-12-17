@@ -1,9 +1,9 @@
 <template >
   <div class="tabbar">
     <ul>
-      <li><router-link to="/jishi">  <i class="iconfont">&#xe613;</i><div>集市</div></router-link></li>
+      <li><router-link to="/jishi"  >  <i class="iconfont">&#xe613;</i><div>集市</div></router-link></li>
       <li><router-link to="/fanyu">  <i class="iconfont">&#xe62a;</i><div>繁育</div></router-link></li>
-      <li><router-link to="/wo">  <i class="iconfont">&#xe606;</i><div>我</div></router-link></li>
+      <li><router-link to="/wo">  <i class="iconfont">&#xe607;</i><div>我</div></router-link></li>
     </ul>
 
   </div>
@@ -68,6 +68,7 @@ ul,li{
   box-sizing: border-box;
   border-top: 1px solid #ccc;
       background: #fff;
+      z-index: 3;
 }
 .tabbar ul{
   display: flex;
