@@ -13,7 +13,7 @@
     <div class="wo_list">
       <ul class="ul_list">
         <li>
-    	  <router-link to="/message">
+    	  <router-link to="/message" >
 	          <div class="aui-list-item-inner aui-list-item-arrow">
 	          	
 	            <i class="iconfont">&#xe606;</i>

@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <div class="head">
+    <div class="head" @click="goback" >
     	<span><i class="mintui mintui-back"></i></span>
     </div>
     <div class="loginwrap">
@@ -47,7 +47,11 @@
 </template>
 <script>
 export default {
-
+   methods: {
+    goback: function() {
+      this.$router.go(-1);
+    }
+  }
 }
 
 </script>

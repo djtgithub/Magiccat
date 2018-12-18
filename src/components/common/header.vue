@@ -1,23 +1,33 @@
- <template lang="html">
- <mt-header title="标题过长会隐藏后面的内容啊哈哈哈哈"  v-show="flag">
-  <router-link to="/" slot="left">
-    <mt-button icon="back">返回</mt-button>
-  </router-link>
- 
-</mt-header>
- </template>
+<template lang="html">
+  <div>
+    <mt-header title="消息">
+      <a slot="left" @click="goback" >
+        <mt-button icon="back" ></mt-button>
+      </a>
+    </mt-header>
+  </div>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      flag: false
+    }
 
- <script>
-    export default {
-    	data(){
-    		return{
-    			flag:false
-    		}
-    		
-    	}
+  },
+  methods: {
+    goback: function() {
+      this.$router.go(-1);
+    }
   }
-</script>
+}
 
- <style >
+</script>
+<style scoped>
+.mint-header {
+  width: 100%;
+  background: #fff;
+  color: #666;
+}
 
 </style>

@@ -14,7 +14,7 @@ const app = {
 			state.loading=loading; //loading
 		},
 		SET_HEADER:(state,header)=>{
-			state.header=header; //header
+			state.header=header; //header 控制header头部的显示
 		},
 		SET_TABBAR:(state,tabbar)=>{
 			state.tabbar=tabbar; //tabbar

@@ -128,7 +128,6 @@ export default {
 }
 
 .child-view{
-/*     margin: 300px auto;  */
 　　width: 100%; 
 　　height: 100%; 　　transition: all .05s cubic-bezier(.55,0,.1,1); 
 }
@@ -150,33 +149,21 @@ export default {
 .slide-right-leave-active {
   opacity: 1;
   transform: translate3d(100%, 0, 0);
-  transition: 0.2s linear;
+  transition:all 0.2s;
   z-index: 9999;
 }
 .slide-left-enter {
   opacity: 1;
   transform: translate3d(100%, 0, 0);
-   transition: 0.2s linear;
+   transition:all 0.2s;
 }
 .slide-left-leave-active {
   opacity: 1;
   transform: translate3d(-100%, 0, 0);
-  transition: 0.2s linear;
+  transition:all 0.2s ;
   z-index: 9999;
 }
 
 
-/* .fade-enter {
-  opacity:0;
-}
-.fade-leave{
-  opacity:1;
-}
-.fade-enter-active{
-  transition:opacity .5s;
-}
-.fade-leave-active{
-  opacity:0;
-  transition:opacity .5s;
-} */
+
 </style>
