@@ -74,7 +74,7 @@ transition: all .2s cubic-bezier(.55,0,.1,1);
 .slide-left-enter-active,
 .slide-left-leave-active {
   will-change: transform;
-  transition: all 500ms;
+  transition: all 100ms;
   position: absolute;
 }
 .slide-right-enter {

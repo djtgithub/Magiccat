@@ -47,6 +47,13 @@
 </template>
 <script>
 export default {
+  data(){
+    return {
+      username:'',
+      password:''
+
+    }
+  },
    methods: {
     goback: function() {
       this.$router.go(-1);
@@ -189,6 +196,10 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
+}
+.mint-cell-wrapper{
+  background: #fff;
+  border-bottom: 1px solid #ccc;
 }
 
 </style>
