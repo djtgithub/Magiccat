@@ -8,6 +8,9 @@ const user = {
 
 	//状态值的改变方法，操作值
 	//提交mutiadtions是更改vuex状态的唯一方法
+	//
+	//
+	//
 	mutations:{
 		SET_TOKEN:(state,token)=>{
 			state.token=token; //loading
