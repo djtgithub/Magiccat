@@ -1,61 +1,64 @@
-<template >
+<template>
   <div class="message">
-    <Header ></Header>
-        <div class="wo_list">
+    <Header></Header>
+    <div class="wo_list">
       <ul class="ul_list">
         <li>
-        <router-link to="/message" >
+          <router-link to="/message">
             <div class="aui-list-item-inner aui-list-item-arrow">
-              
-              <i class="iconfont">&#xe606;</i>
-              <div class="aui-list-item-title">系统消息</div>
+              <i class="iconfont"><img src="../../assets/message/xiaoxi.png" alt="" /></i>
+              <div class="aui-list-item-title"><p>系统消息</p><p>看喵喵就送回家</p></div>
               <div class="aui-list-item-right">
-                <div class="aui-badge" style="position:relative;top:0; left:0">8</div>
+                <p>17:00</p>
+               <p> <i class="iconfont">&#xe606;</i></p>
               </div>
             </div>
           </router-link>
         </li>
         <li>
           <div class="aui-list-item-inner aui-list-item-arrow">
-            <i class="iconfont">&#xe641;</i>
-            <div class="aui-list-item-title">订单消息</div>
-            <div class="desc">签到领猫币</div>
+            <i class="iconfont"><img src="../../assets/message/dingdan.png" alt="" /></i>
+            <div class="aui-list-item-title"><p>订单消息</p><p>您选择繁育的魔力猫19840622已交货</p></div>
             <div class="aui-list-item-right">
+               <p>09:00</p>
+               <p> <i class="iconfont">&#xe606;</i></p>
             </div>
           </div>
         </li>
         <li>
           <div class="aui-list-item-inner aui-list-item-arrow">
-            <i class="iconfont">&#xe681;</i>
-            <div class="aui-list-item-title">莱斯</div>
-            <div class="desc">邀请送猫币</div>
+            <i class="iconfont"><img src="../../assets/message/dingdan.png" alt="" /></i>
+            <div class="aui-list-item-title"><p>莱斯</p><p>好的</p></div>
             <div class="aui-list-item-right">
+               <p>09:00</p>
+                <p> <i class="iconfont">&#xe606;</i></p>
             </div>
           </div>
         </li>
         <li>
           <div class="aui-list-item-inner aui-list-item-arrow">
-            <i class="iconfont">&#xe609;</i>
-            <div class="aui-list-item-title">蓝迪</div>
+            <i class="iconfont"><img src="../../assets/message/dingdan.png" alt="" /></i>
+            <div class="aui-list-item-title"><p>蓝迪</p><p>[图片]</p></div>
             <div class="aui-list-item-right">
+               <p>09:00</p>
+                <p> <i class="iconfont">&#xe606;</i></p>
             </div>
           </div>
         </li>
       </ul>
-      
     </div>
   </div>
-
 </template>
 <script>
-    import Header from '@/components/common/header';
+import Header from '@/components/common/header';
 export default {
-	data(){
-		return {
-		}
-	},components:{
-       Header,
-    },methods:{
+  data() {
+    return {}
+  },
+  components: {
+    Header,
+  },
+  methods: {
     // fngourl:function(ul){
     //   alert(url)
     // }
@@ -64,17 +67,16 @@ export default {
 
 </script>
 <style scoped>
-
-ul,li{
+ul,
+li {
   list-style: none;
 }
-.message{
-	background: red;
-  height: 13rem;
+
+.message {
   width: 100%;
 }
+
 .wo_list {
-  background: #f6f6f6;
   padding-bottom: 0.6rem;
 }
 
@@ -115,31 +117,22 @@ ul,li{
   align-items: center;
 }
 
-.aui-list-item-arrow:before {
-  content: '';
-  width: 0.18rem;
-  height: 0.18rem;
-  position: absolute;
-  top: 50%;
-  right: 0.34rem;
-  background: transparent;
-  border: 1px solid #dddddd;
-  border-top: none;
-  border-right: none;
-  z-index: 2;
-  -webkit-border-radius: 0;
-  border-radius: 0;
-  -webkit-transform: rotate(-135deg);
-  transform: rotate(-135deg) translateY(50%);
-}
 
 .aui-list-item-title {
-  width: 3.37rem;
   font-size: 0.18rem;
   position: relative;
   color: #212121;
   text-align: left;
   margin-left: 0.1rem;
+  flex: 4;
+  /* max-width: 3rem; */
+}
+
+.aui-list-item-title p{
+    max-width: 3rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .aui-list-item-right,
@@ -171,8 +164,8 @@ ul,li{
   position: relative;
   font-size: 0.16rem;
   color: #757575;
-  margin-left: 2.25rem;
-  width: 1.2rem;
+  /* margin-left: 2.25rem; */
+      flex: 1;
 }
 
 .aui-list-item-right .aui-badge,
@@ -206,8 +199,18 @@ ul,li{
 }
 
 .aui-list-item-inner.aui-list-item-arrow .iconfont {
-  width: 0.63rem;
-  color: #e98c09;
+  width: 0.82rem;
+  height: 0.82rem;
+  border-radius: 100%;
+      flex: 1;
 }
-
+.aui-list-item-inner.aui-list-item-arrow .iconfont img{
+  display: block;
+   width: 100%;
+   height: 100%;
+   border-radius: 100%;
+}
+.mint-header-title{
+  font-size: 0.3rem !important;
+}
 </style>

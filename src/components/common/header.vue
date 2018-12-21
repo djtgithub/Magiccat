@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <mt-header title="消息">
+    <mt-header title="消息" style="  font-size: 0.3rem !important;">
       <a slot="left" @click="goback" >
         <mt-button icon="back" ></mt-button>
       </a>
@@ -29,5 +29,7 @@ export default {
   background: #fff;
   color: #666;
 }
-
+.mint-header .mint-header-title{
+  font-size: 0.3rem !important;
+}
 </style>

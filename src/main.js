@@ -5,27 +5,35 @@ import App from './App'
 import router from './router'
 import '../static/js/rem.js'
 import Mint from 'mint-ui';
+import { toast } from 'mint-ui';
 import 'mint-ui/lib/style.css';
 import store from './store'
 import Cookies from 'js-cookie';
 import FastClick from 'fastclick';
+import $ from 'jquery';
 FastClick.attach(document.body);
-Vue.prototype.Cookies = Cookies
+Vue.prototype.Cookies = Cookies;
+Vue.$toast =Vue.prototype.$toast = toast;
 Vue.use(Mint);
 import { Swipe, SwipeItem } from 'mint-ui';
 Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+
+//引入公共加密js
+var sha1 =require('./assets/js/sha1.js')
+Vue.prototype.sha1 = sha1;
+
+
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
-    store,
+  store,
   components: { App },
   methods:{
     getPath(){
-    console.log(1111)
    }
   },
   watch: {
@@ -44,7 +52,6 @@ new Vue({
       
     },
     '$route':function(to){
-      console.log(1111)
       // if(to.meta.header==true){
       //   // alert(1)
       //   this.$store.commit('SET_HEADER',true);

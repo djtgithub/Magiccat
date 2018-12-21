@@ -4,11 +4,7 @@
       <span><i class="mintui mintui-back"></i></span>
     </div>
     <div class="loginwrap">
-      <div class="photo">
-        <div class="phpoto_img">
-          <img src="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=2527767901,3131898055&fm=58&bpow=720&bpoh=1080" />
-        </div>
-        </div>
+      
         <div class="input_col">
           <a class="mint-cell mint-field">
            <div class="mint-cell-left"></div> 
@@ -34,10 +30,10 @@
            <div class="mint-cell-left"></div> 
            <div class="mint-cell-wrapper">
               <div class="mint-cell-title">
-                  <i class="iconfont">&#xe632;</i>
+                  <i class="iconfont">&#xe601;</i>
               </div> 
               <div class="mint-cell-value">
-                <input placeholder="请输入密码" type="password" class="mint-field-core" v-model="logindata.password"> 
+                <input placeholder="请输入您的邮箱" type="text" class="mint-field-core" v-model="logindata.email"> 
                 <div class="mint-field-clear" style="display: none;">
                   <i class="mintui mintui-field-error"></i>
                 </div> 
@@ -49,33 +45,10 @@
             <div class="mint-cell-right"></div>
           </a>
         </div>
-        <div class="golink">
-          <router-link to="/register">我要注册</router-link>
-          <router-link to="/forgetpassword">忘记密码</router-link>
-        </div>
         <div class="btn">
-          <mt-button type="primary" class="mint-button mint-button--primary mint-button--large" @click="login">登录</mt-button>
+          <mt-button type="primary" class="mint-button mint-button--primary mint-button--large" @click="login">确定发送</mt-button>
         </div>
-        <div class="other">
-          其他登录方式
-        </div>
-        <ul class="ullist">
-          <li>
-            <div>
-              <i class="iconfont">&#xe631;</i>
-            </div>
-          </li>
-          <li>
-            <div>
-              <i class="iconfont">&#xe604;</i>
-            </div>
-          </li>
-          <li>
-            <div>
-              <i class="iconfont">&#xe64c;</i>
-            </div>
-          </li>
-        </ul>
+      
       </div>
     </div>
 </template>
@@ -86,7 +59,7 @@ export default {
     return {
       logindata: {
         username: '',
-        password: ''
+        email: ''
       }
     }
   },
@@ -97,9 +70,9 @@ export default {
     login() {
       const that = this;
       //登录验证
-      if (this.logindata.username == '' || this.logindata.password == '') {
+      if (this.logindata.username == '' || this.logindata.email == '') {
         that.$toast({
-          message: '用户名或密码不能为空',
+          message: '用户名或邮箱不能为空',
           position: 'bottom',
           duration: 5000
         });
@@ -108,32 +81,23 @@ export default {
 
       const data = {
         "username": this.logindata.username,
-        "password": this.logindata.password
+        "email": this.logindata.email
       }
       //登录请求
       return fetch({
-        url: 'user/login',
+        url: 'user/resetRequest',
         method: 'post',
         data
       }).then(function(res) {
 
-        if(res.status == 200 && res.statusText == 'OK') {
-              that.$toast({
-                message: '登录成功',
-                position: 'bottom',
-                duration: 5000
-              });
-              //登录成功后 登录信息与状态的处理
-              that.$store.commit('SET_TOKEN', that.logindata.username);
-              that.Cookies.set('Token', that.logindata.username);
-
-              that.$store.commit('SET_LOGIN', true);
-              that.Cookies.set('Login', true);
-
-              that.$router.push({ path: '/Home' });
-        } else {
-          that.$toast((res.response.data).error.message);
-        }
+        if(res.status==200 &&res.statusText=='OK'){
+          that.$toast(res.data.msg+'请查收');
+          setTimeout(function(){
+             that.$router.push({name:'Login'});
+          },1000)
+         }else{
+           that.$toast(res.message);
+         }
 
       }).catch(function(rep) {
           that.$toast((rep.response.data).error.message);

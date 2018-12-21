@@ -6,7 +6,7 @@
       	<div class="photo">
       		<img src="http://c.hiphotos.baidu.com/image/h%3D300/sign=d4c9df02d7b44aed464eb8e4831d876a/bf096b63f6246b605ee26e3ce6f81a4c500fa28e.jpg" alt="">
       	</div>
-      	<div style="color:#232323; line-height: 0.46rem;font-size:0.28rem;">阿拉丁神灯</div>
+      	<div style="color:#232323; line-height: 0.46rem;font-size:0.28rem;" v-text="this.store.state.user.token"></div>
       	<div>18893462426</div>
       </div>
     </div>
@@ -94,6 +94,8 @@ import Tabbar from '@/components/common/tabbar';
 export default {
   components: {
     Tabbar
+  },created(){
+    console.log(this.store.state.user.token)
   }
 }
 

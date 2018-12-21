@@ -6,7 +6,7 @@
     <div class="loginwrap">
       <div class="photo">
         <div class="phpoto_img">
-          <img src="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=2527767901,3131898055&fm=58&bpow=720&bpoh=1080" />
+          <img src="../../assets/register/photo.jpg" />
         </div>
         </div>
         <div class="input_col">
@@ -18,6 +18,26 @@
               </div> 
               <div class="mint-cell-value">
                 <input placeholder="请输入用户名" type="text" class="mint-field-core" v-model="logindata.username"> 
+                <div class="mint-field-clear" style="display: none;">
+                  <i class="mintui mintui-field-error"></i>
+                </div> 
+                <span class="mint-field-state is-default">
+                  <i class="mintui mintui-field-default"></i></span> 
+                  <div class="mint-field-other"></div>
+              </div> 
+            </div> 
+            <div class="mint-cell-right"></div>
+          </a>
+        </div>
+        <div class="input_col">
+          <a class="mint-cell mint-field">
+           <div class="mint-cell-left"></div> 
+           <div class="mint-cell-wrapper">
+              <div class="mint-cell-title">
+                  <i class="iconfont">&#xe601;</i>
+              </div> 
+              <div class="mint-cell-value">
+                <input placeholder="请输入您的邮箱" type="text" class="mint-field-core" v-model="logindata.email"> 
                 <div class="mint-field-clear" style="display: none;">
                   <i class="mintui mintui-field-error"></i>
                 </div> 
@@ -50,32 +70,11 @@
           </a>
         </div>
         <div class="golink">
-          <router-link to="/register">我要注册</router-link>
-          <router-link to="/forgetpassword">忘记密码</router-link>
+          <router-link to="/login">已有账号，直接登录</router-link>
         </div>
         <div class="btn">
-          <mt-button type="primary" class="mint-button mint-button--primary mint-button--large" @click="login">登录</mt-button>
+          <mt-button type="primary" class="mint-button mint-button--primary mint-button--large" @click="login">注册</mt-button>
         </div>
-        <div class="other">
-          其他登录方式
-        </div>
-        <ul class="ullist">
-          <li>
-            <div>
-              <i class="iconfont">&#xe631;</i>
-            </div>
-          </li>
-          <li>
-            <div>
-              <i class="iconfont">&#xe604;</i>
-            </div>
-          </li>
-          <li>
-            <div>
-              <i class="iconfont">&#xe64c;</i>
-            </div>
-          </li>
-        </ul>
       </div>
     </div>
 </template>
@@ -86,7 +85,8 @@ export default {
     return {
       logindata: {
         username: '',
-        password: ''
+        password: '',
+        email: ''
       }
     }
   },
@@ -97,9 +97,9 @@ export default {
     login() {
       const that = this;
       //登录验证
-      if (this.logindata.username == '' || this.logindata.password == '') {
+      if (this.logindata.username == '' || this.logindata.password == '' || this.logindata.email == '') {
         that.$toast({
-          message: '用户名或密码不能为空',
+          message: '用户名或密码或邮箱不能为空',
           position: 'bottom',
           duration: 5000
         });
@@ -108,35 +108,34 @@ export default {
 
       const data = {
         "username": this.logindata.username,
-        "password": this.logindata.password
+        "password": this.logindata.password,
+        "email": this.logindata.email
       }
       //登录请求
       return fetch({
-        url: 'user/login',
+        url: 'user',
         method: 'post',
         data
       }).then(function(res) {
 
-        if(res.status == 200 && res.statusText == 'OK') {
-              that.$toast({
-                message: '登录成功',
-                position: 'bottom',
-                duration: 5000
-              });
-              //登录成功后 登录信息与状态的处理
-              that.$store.commit('SET_TOKEN', that.logindata.username);
-              that.Cookies.set('Token', that.logindata.username);
-
-              that.$store.commit('SET_LOGIN', true);
-              that.Cookies.set('Login', true);
-
-              that.$router.push({ path: '/Home' });
+        if (res.status == 200 && res.statusText == 'OK') {
+          that.$toast({
+            message: '注册成功',
+            position: 'bottom',
+            duration: 5000
+          });
+          //注册成功后 跳转到登录页面
+          that.$router.push({ path: '/login' });
         } else {
-          that.$toast((res.response.data).error.message);
+          if ((res.data).error.status == '202') {
+            that.$toast('该用户名已经存在');
+          } else {
+            that.$toast('注册失败');
+          }
         }
 
       }).catch(function(rep) {
-          that.$toast((rep.response.data).error.message);
+        that.$toast((rep.response.data).error.message);
       });
 
     }
@@ -230,67 +229,8 @@ export default {
 }
 
 .golink a {
-  flex: 1;
   text-align: left;
   text-decoration: none;
-}
-
-.golink a:nth-child(2) {
-  text-align: right;
-}
-
-.other {
-  margin-top: 0.9rem;
-  position: relative;
-}
-
-.other:after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  right: 0;
-  height: 1px;
-  width: 1.7rem;
-  background: #ccc;
-}
-
-.other:before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0;
-  height: 1px;
-  width: 1.7rem;
-  background: #ccc;
-}
-
-.ullist {
-  height: 0.78rem;
-  width: 4.34rem;
-  margin: 0.6rem auto 0;
-  display: flex;
-}
-
-.ullist li {
-  flex: 1;
-  text-align: center;
-
-}
-
-.ullist li div {
-  width: 0.78rem;
-  height: 0.78rem;
-  border-radius: 50%;
-  background: #dcdcdc;
-  margin: 0 auto;
-  position: relative;
-}
-
-.ullist li div i {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 .mint-cell-wrapper {
