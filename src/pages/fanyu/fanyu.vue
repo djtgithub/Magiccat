@@ -297,7 +297,7 @@ ul li {
   border-right: 0.1rem solid transparent;
   border-top: 0.1rem solid #ffb75a;
   position: absolute;
-  bottom: -0.1rem;
+  bottom: -0.07rem;
   left: 50%;
   transform: translateX(-50%);
 }
