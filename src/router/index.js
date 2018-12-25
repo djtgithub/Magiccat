@@ -13,6 +13,7 @@ import Forgetpwd from '@/pages/forgetpassword/forgetpassword';
 import Login from '@/pages/login/login';
 import Yindao from '@/pages/yindao/yindao';
 import Message from '@/pages/message/message';
+import Search from '@/pages/search/search';
 
 Vue.use(Router);
 //  requireLogin:true  判断是否需要登录的权限
@@ -72,6 +73,11 @@ const router = new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path:'/search',
+      name:'Search',
+      component:Search
     },
     {
       path: '/home',

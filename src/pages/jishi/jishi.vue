@@ -1,5 +1,5 @@
 <template lang="html">
-  <div style="background: #fff;" ref="wrapper" class="main-body" :style="{ height: (wrapperHeight-50) + 'px' }">
+  <div style="background: #fff;" ref="wrapper" class="main-body" >
     <div class="home_header">
       <div class="home_header_l">
         <i class="iconfont iconmap">&#xe60f;</i>
@@ -8,13 +8,16 @@
       </div>
       <div class="home_header_r">
         <div class="page-search">
+          <router-link to="/search">
           <div class="mint-searchbar">
-            <div class="mint-searchbar-inner"><i class="mintui mintui-search"></i> <input type="search" placeholder="搜索" class="mint-searchbar-core"></div>
+            <div class="mint-searchbar-inner"><i class="mintui mintui-search"></i> <input type="search" placeholder="搜索1" class="mint-searchbar-core"></div>
             <a class="mint-searchbar-cancel" style="display: none;">取消</a>
           </div>
+          </router-link>
         </div>
       </div>
     </div>
+     <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore" :autoFill="isAutoFill">
     <div class="home_swiper">
       <mt-swipe :auto="2000">
         <mt-swipe-item v-for="item in Carousel">
@@ -28,21 +31,21 @@
     <div class="select">
       <ul>
         <li :class="{active:isActive==0}" @click="changClass(isActive=0,0)">稀有度</li>
-        <li :class="{active:isActive==1}" @click="changClass(isActive=1,1)">价格</li>
+        <li :class="{active:isActive==1}" @click="changClass(isActive=1,2)">价格</li>
         <li :class="{active:isActive==2}" @click="changClass(isActive=2,2)">时间</li>
         <li class="bdl">筛选<i class="iconfont">&#xe611;</i></li>
       </ul>
     </div>
-    <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore" :autoFill="isAutoFill">
+   
       <div class="jishi_cont">
         <ul>
           <li v-for="item in Content">
             <div class="col l"><img :src="item.imgUrl" /> </div>
               <div class="col r">
-                <div class="bigtit" >{{item.name}}<span v-text="item.attributes"></span></div>
+                <div class="bigtit">{{item.name}}<span v-text="item.attributes"></span></div>
                 <div class="numbering" v-text="item.Numbering">19840630</div>
-                <div class="price" >{{item.money}}猫币</div>
-                <div class="label" >
+                <div class="price">{{item.money}}猫币</div>
+                <div class="label">
                   <span v-for="lable in item.label">{{lable}}</span>
                 </div>
               </div>
@@ -66,15 +69,16 @@ export default {
       wrapperHeight: 0,
       courrentPage: 0,
       Carousel: [],
-      Content:[],
-      num:3
+      Content: [],
+      num: 2,
+      Contentlength: 0
     }
   },
   methods: {
     changClass: function(isActive, str) {
-      console.log('切换数据');
+      this.allLoaded = false;
+      this.num=2;
       this.loadjishi(str);
-      // isActive=str
     },
     loadTop() {
       this.loadFrist();
@@ -85,91 +89,45 @@ export default {
     },
     // 下来刷新加载
     loadFrist() {
+      this.num = 2;
       this.loadjishi(2);
       this.allLoaded = false;
-      // window.location.reload()
-
-      // setTimeout(() => {
-      //   let lastValue = this.datas[this.datas.length - 1];
-      //   if (lastValue < 40) {
-      //     for (let i = 1; i <= 10; i++) {
-      //       this.datas.push(lastValue + i);
-      //     }
-      //   } else {
-      //     this.allLoaded = true;
-      //   }
-      //   this.courrentPage = 0;
-      //   this.allLoaded = false; // 可以进行上拉
-      //   // this.datas = response.data.message;
-      //   this.$refs.loadmore.onTopLoaded();
-      // }, 1500);
-
-
     },
     // 加载更多
     loadMore() {
-      console.log('加载更多');
-      // this.num=this.num++;
-       console.log(this.num++)
-       if(this.num++>=5){
-           this.allLoaded = true; // 若数据已全部获取完毕
-       }
-       this.$refs.loadmore.onBottomLoaded();
+      if (this.num++ >= this.Contentlength) {
+        this.allLoaded = true; // 若数据已全部获取完毕
+        this.$toast({
+          message: '没有更多数据了',
+          position: 'bottom',
+          duration: 5000
+        })
+      }
+      this.$refs.loadmore.onBottomLoaded();
       this.loadjishi(this.num++);
-      // this.Content=this.Content+this.Content;
-      // this.$axios
-      //   .get("goodslist.json")
-      //   .then(response => {
-      //     // concat数组的追加
-      //     this.datas = this.datas.concat(response.data.message);
-      //     if (this.courrentPage > 2) {
-      //       this.allLoaded = true; // 若数据已全部获取完毕
-      //     }
-      //     this.courrentPage++;
-      //     this.$refs.loadmore.onBottomLoaded();
-      //   })
-      //   .catch(error => {
-      //     console.log(error);
-      //     alert("网络错误，不能访问");
-      //   });
-      // setTimeout(() => {
-      //   let lastValue = this.datas[this.datas.length - 1];
-      //   if (lastValue < 40) {
-      //     this.allLoaded = true;
-      //     for (let i = 1; i <= 10; i++) {
-      //       this.datas.push(lastValue + i);
-      //     }
-      //   } else {
-      //     this.allLoaded = true;
-      //   }
-
-      //   this.$refs.loadmore.onTopLoaded();
-      // }, 1500);
     },
     //获取集市广场内容
-    loadjishi(num){
-      console.log(num)
-       var that = this;
-        fetch({
-      url: 'jishi_content?filter={"where":{},"skip":0,"limit":'+num+'}',
-      method: 'get'
-    }).then(function(res) {
-       console.log(res.data.length)
-      if (res.status == 200 && res.statusText == 'OK') {
-        that.$refs.loadmore.onTopLoaded();
-            that.Content=res.data;
-      }
-    }).catch(function(rep) {
-      that.$toast((rep.response.data).error.message);
-    });
+    loadjishi(num) {
+      var that = this;
+      fetch({
+        url: 'jishi_content?filter={"where":{},"skip":0,"limit":' + num + '}',
+        method: 'get'
+      }).then(function(res) {
+        if (res.status == 200 && res.statusText == 'OK') {
+          that.$refs.loadmore.onTopLoaded();
+          that.Content = res.data;
+        }
+      }).catch(function(rep) {
+        that.$toast((rep.response.data).error.message);
+      });
     }
-
   },
   created() {
     this.loadFrist();
     //获取轮播图
     var that = this;
-     fetch({
+    
+    fetch({
       url: 'Carousel_map',
       method: 'get'
     }).then(function(res) {
@@ -179,9 +137,17 @@ export default {
     }).catch(function(rep) {
       that.$toast((rep.response.data).error.message);
     });
-   //获取集市广场内容
+    //获取集市广场内容
     this.loadjishi(this.num);
-
+    //统计内容的数据length
+    fetch({
+      url: 'jishi_content/count',
+      method: 'get'
+    }).then(function(res) {
+      if (res.status == 200 && res.statusText == 'OK') {
+        that.Contentlength = res.data.count;
+      }
+    })
   },
   mounted() {
     // 父控件要加上高度，否则会出现上拉不动的情况
@@ -192,7 +158,7 @@ export default {
 }
 
 </script>
-<style>
+<style scoped>
 @import '../../assets/icon/iconfont.css';
 
 .main-body {
@@ -437,6 +403,5 @@ ul li {
   border: 1px solid #ccc;
   margin-right: 0.14rem;
 }
-
 
 </style>

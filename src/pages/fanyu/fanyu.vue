@@ -1,5 +1,5 @@
 <template lang="html">
-  <div style="background: #fff;">
+  <div style="background: #fff;" ref="wrapper" class="main-body" >
     <div class="home_header">
       <div class="home_header_l">
         <i class="iconfont iconmap">&#xe60f;</i>
@@ -16,79 +16,135 @@
       </div>
     </div>
     <div class="jishi_tit">
-      繁育中心
+      集市广场
     </div>
     <div class="select">
       <ul>
-        <li :class="{active:isActive==0}"  @click="changClass(isActive=0)">稀有度</li>
-        <li :class="{active:isActive==1}"  @click="changClass(isActive=1)">价格</li>
-        <li :class="{active:isActive==2}"  @click="changClass(isActive=2)">时间</li>
+        <li :class="{active:isActive==0}" @click="changClass(isActive=0,0)">稀有度</li>
+        <li :class="{active:isActive==1}" @click="changClass(isActive=1,4)">价格</li>
+        <li :class="{active:isActive==2}" @click="changClass(isActive=2,4)">时间</li>
         <li class="bdl">筛选<i class="iconfont">&#xe611;</i></li>
       </ul>
     </div>
-    <div class="jishi_cont">
-      <ul>
-        <li>
-          <div class="col l"><img src="../../assets/img/cat1.jpg" /> </div>
-            <div class="col r">
-              <div class="bigtit">英短折耳猫 <span>可爱</span></div>
-              <div class="numbering">19840630</div>
-              <div class="price">2000.00猫币</div>
-              <div class="label">
-                <span>第二代</span>
-                <span>0分钟</span>
-                <span>休息中</span>
+    <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore" :autoFill="isAutoFill">
+      <div class="jishi_cont">
+        <ul>
+          <li v-for="item in Content">
+            <div class="col l"><img :src="item.imgUrl" /> </div>
+              <div class="col r">
+                <div class="bigtit">{{item.name}}<span v-text="item.attributes"></span></div>
+                <div class="numbering" v-text="item.Numbering">19840630</div>
+                <div class="price">{{item.money}}猫币</div>
+                <div class="label">
+                  <span v-for="lable in item.label">{{lable}}</span>
+                </div>
               </div>
-            </div>
-        </li>
-        <li>
-          <div class="col l"><img src="../../assets/img/cat2.jpg" /> </div>
-            <div class="col r">
-              <div class="bigtit">英短折耳猫 <span>可爱</span></div>
-              <div class="numbering">19840630</div>
-              <div class="price">2000.00猫币</div>
-              <div class="label">
-                <span>第二代</span>
-                <span>0分钟</span>
-                <span>休息中</span>
-              </div>
-            </div>
-        </li>
-        <li>
-          <div class="col l"><img src="../../assets/img/cat3.jpg" /> </div>
-            <div class="col r">
-              <div class="bigtit">英短折耳猫 <span>可爱</span></div>
-              <div class="numbering">19840630</div>
-              <div class="price">2000.00猫币</div>
-              <div class="label">
-                <span>第二代</span>
-                <span>0分钟</span>
-                <span>休息中</span>
-              </div>
-            </div>
-        </li>
-      </ul>
-    </div>
+          </li>
+        </ul>
+      </div>
+    </mt-loadmore>
   </div>
 </template>
 <script>
+import fetch from '../../utils/fetch';
 export default {
-  data(){
+  data() {
     return {
-      isActive:false
+      isActive: false,
+      datas: [],
+      //可以进行上拉
+      allLoaded: false,
+      //是否自动触发上拉函数
+      isAutoFill: false,
+      wrapperHeight: 0,
+      courrentPage: 0,
+      Content: [],
+      num: 4,
+      Contentlength: 0
     }
   },
-  methods:{
-    changClass:function(isActive,str){
-       console.log('切换数据');
-       // isActive=str
+  methods: {
+    changClass: function(isActive, str) {
+       this.allLoaded = false;
+      this.loadjishi(str);
+    },
+    loadTop() {
+      this.loadFrist();
+    },
+    // 上拉加载
+    loadBottom() {
+      this.loadMore();
+    },
+    // 下来刷新加载
+    loadFrist() {
+      this.num = 4;
+      this.loadjishi(this.num);
+      this.allLoaded = false;
+    },
+    // 加载更多
+    loadMore() {
+      if (this.num++ >= this.Contentlength) {
+        this.allLoaded = true; // 若数据已全部获取完毕
+        this.$toast({
+          message: '没有更多数据了',
+          position: 'bottom',
+          duration: 5000
+        })
+      }
+      this.$refs.loadmore.onBottomLoaded();
+      this.loadjishi(this.num++);
+    },
+    //获取集市广场内容
+    loadjishi(num) {
+      var that = this;
+      fetch({
+        url: 'jishi_content?filter={"where":{},"skip":0,"limit":' + num + '}',
+        method: 'get'
+      }).then(function(res) {
+        if (res.status == 200 && res.statusText == 'OK') {
+          that.$refs.loadmore.onTopLoaded();
+          that.Content = res.data;
+        }
+      }).catch(function(rep) {
+        that.$toast((rep.response.data).error.message);
+      });
     }
+  },
+  created() {
+    this.loadFrist();
+    //获取轮播图
+    var that = this;
+   
+  
+    //获取集市广场内容
+    this.loadjishi(this.num);
+     //统计内容的数据length
+    fetch({
+      url: 'jishi_content/count',
+      method: 'get'
+    }).then(function(res) {
+      if (res.status == 200 && res.statusText == 'OK') {
+        that.Contentlength = res.data.count;
+      }
+    })
+  },
+  mounted() {
+    // 父控件要加上高度，否则会出现上拉不动的情况
+    this.wrapperHeight =
+      document.documentElement.clientHeight -
+      this.$refs.wrapper.getBoundingClientRect().top;
+      console.log(this.wrapperHeight)
   }
 }
 
 </script>
-<style>
+<style scoped>
 @import '../../assets/icon/iconfont.css';
+
+.main-body {
+  /* 加上这个才会有当数据充满整个屏幕，可以进行上拉加载更多的操作 */
+  overflow: scroll;
+}
 
 * {
   margin: 0;
@@ -240,7 +296,7 @@ ul li {
 }
 
 .jishi_cont {
-  padding: 0 0.21rem 1rem;
+  padding: 0 0.21rem 0.2rem;
 }
 
 .jishi_cont ul li {
@@ -320,12 +376,12 @@ ul li {
 }
 
 .label span {
-      display: inline-block;
-    padding: 0 0.1rem;
-    line-height: 0.28rem;
-    height: 0.28rem;
-    border: 1px solid #ccc;
-    margin-right: 0.14rem;
+  display: inline-block;
+  padding: 0 0.1rem;
+  line-height: 0.28rem;
+  height: 0.28rem;
+  border: 1px solid #ccc;
+  margin-right: 0.14rem;
 }
 
 </style>

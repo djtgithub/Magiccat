@@ -11,7 +11,7 @@ export default {
 }
 
 </script>
-<style>
+<style scoped>
 @import '../../assets/icon/iconfont.css';
 *{
   margin: 0;padding: 0;

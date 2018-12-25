@@ -27,7 +27,7 @@ export default {
 }
 
 </script>
-<style scoped="scoped">
+<style scoped>
 
 *{
   margin: 0;padding: 0;

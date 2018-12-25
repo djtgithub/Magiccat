@@ -1,8 +1,8 @@
 <template lang="html">
   <div>
-    <!-- <transition :name="transitionName" mode="in-out">  -->
+    <transition :name="transitionName" mode="in-out"> 
       <router-view class="child-view" ></router-view>
-    <!-- </transition  >  -->
+    </transition  > 
 
     <Tabbar></Tabbar>
   </div>
@@ -129,7 +129,8 @@ export default {
 
 .child-view{
 　　width: 100%; 
-　　height: 100%; 　　transition: all .5s cubic-bezier(.55,0,.1,1); 
+　　height: 100%; 　　
+    transition: all .5s cubic-bezier(.55,0,.1,1); 
 }
 
 /*路由切换动画*/
@@ -138,29 +139,29 @@ export default {
 .slide-left-enter-active,
 .slide-left-leave-active {
   will-change: transform;
-  transition: all 10ms;
+  transition: all 100ms;
   position: absolute;
 }
 .slide-right-enter {
   opacity: 1;
   transform: translate3d(-100%, 0, 0);
-   transition: 0.2s linear;
+   transition: 0.5s linear;
 }
 .slide-right-leave-active {
   opacity: 1;
   transform: translate3d(100%, 0, 0);
-  transition:all 0.2s;
+  transition:all 0.5s;
   z-index: 9999;
 }
 .slide-left-enter {
   opacity: 1;
   transform: translate3d(100%, 0, 0);
-   transition:all 0.2s;
+   transition:all 0.5s;
 }
 .slide-left-leave-active {
   opacity: 1;
   transform: translate3d(-100%, 0, 0);
-  transition:all 0.2s ;
+  transition:all 0.5s ;
   z-index: 9999;
 }
 

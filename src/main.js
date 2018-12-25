@@ -26,6 +26,9 @@ Vue.prototype.sha1 = sha1;
 
 
 
+import './assets/css/common.css'
+
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
