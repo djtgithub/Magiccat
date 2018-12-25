@@ -25,7 +25,7 @@
 </script>
 <style scoped>
 .home_header {
-  height: 0.5rem !important;
+  height: 0.78rem !important;
   overflow: hidden;
 }
   .home_header_r {

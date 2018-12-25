@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header ></Header>
+    <!-- <Header ></Header> -->
     <transition :name="transitionName" mode="in-out"> 
         <router-view class="child-view"/>  
     </transition>
@@ -17,7 +17,7 @@ export default {
     return {
        yindao:this.$store.state.app.loading,
        transitionName: 'slide-left',  // 默认动态路由变化为slide-right
-       Header
+       // Header
     }
    
   },

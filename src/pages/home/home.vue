@@ -87,39 +87,6 @@ export default {
   right: 0.04rem;
 }
 
-.home_header_r {
-  float: right;
-  width: 77.5%;
-  height: 100%;
-  overflow: hidden;
-  position: relative;
-}
-
-.page-search {
-  position: absolute;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  transform: translateY(-50%);
-  left: 0.24rem;
-  width: 89%;
-}
-
-.mint-searchbar-inner {
-  border-radius: 1rem;
-  background: #f6f6f6 !important;
-  height: 0.5rem;
-}
-
-.mint-searchbar {
-  padding: 0;
-  transform: translate(-50% -50%);
-  background: #fff !important;
-}
-
-.mint-searchbar-core {
-  text-indent: 0.1rem;
-  background: #f6f6f6 !important;
-}
 
 .mint-swipe-item img {
   display: block;
