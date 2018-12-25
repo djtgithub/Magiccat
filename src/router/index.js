@@ -5,7 +5,7 @@ import Fanyu from '@/pages/fanyu/fanyu';
 import Wo from '@/pages/wo/wo';
 import Tabbar from '@/components/common/tabBar';
 import Header from '@/components/common/header';
-import other from '@/pages/other/other';
+import Detail from '@/pages/detail/detail';
 import error from '@/pages/error/error';
 import Home from '@/pages/home/home';
 import Register from '@/pages/register/register';
@@ -111,9 +111,9 @@ const router = new Router({
       meta:{header:true},
       requireLogin:true
     },{
-    	path:'/other',
-    	name: 'other',
-      component: other,
+    	path:'/detail',
+    	name: 'Detail',
+      component: Detail,
       requireLogin:true
     },{
       path: '*', // 404路由
@@ -128,7 +128,7 @@ const router = new Router({
 
 
 router.beforeEach((to, from, next) => {
-  console.log(to.meta)
+  // console.log(to.meta)
   let isLogin = String(store.state.user.login); // 是否登录
   // alert(JSON.stringify(to.meta.requireLogin))
   if (to.meta.requireLogin) {

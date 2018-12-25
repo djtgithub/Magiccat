@@ -1,6 +1,12 @@
 <template>
   <div class="message">
-    <Header></Header>
+    <div>
+      <mt-header title="消息" style="  font-size: 0.3rem !important;">
+        <a slot="left" @click="goback" >
+          <mt-button icon="back" ></mt-button>
+        </a>
+      </mt-header>
+    </div>
     <div class="wo_list">
       <ul class="ul_list">
         <li>
@@ -59,9 +65,10 @@ export default {
     Header,
   },
   methods: {
-    // fngourl:function(ul){
-    //   alert(url)
-    // }
+    
+    goback: function() {
+      this.$router.go(-1);
+    }
   }
 }
 

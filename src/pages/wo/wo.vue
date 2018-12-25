@@ -94,8 +94,6 @@ import Tabbar from '@/components/common/tabbar';
 export default {
   components: {
     Tabbar
-  },created(){
-    console.log(this.store.state.user.token)
   }
 }
 

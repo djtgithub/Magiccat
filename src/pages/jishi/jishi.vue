@@ -39,7 +39,8 @@
    
       <div class="jishi_cont">
         <ul>
-          <li v-for="item in Content">
+          <li v-for="item in Content" :id="item.gid">
+            <router-link :to="{name:'Detail',params:{id:item.gid}}">
             <div class="col l"><img :src="item.imgUrl" /> </div>
               <div class="col r">
                 <div class="bigtit">{{item.name}}<span v-text="item.attributes"></span></div>
@@ -49,6 +50,7 @@
                   <span v-for="lable in item.label">{{lable}}</span>
                 </div>
               </div>
+              </router-link>
           </li>
         </ul>
       </div>
@@ -324,6 +326,9 @@ ul li {
   border-bottom: 1px solid #ccc;
   display: flex;
   padding: 0.2rem 0;
+}
+.jishi_cont ul li a{
+  display: -webkit-box;
 }
 
 .jishi_cont ul li div.col {

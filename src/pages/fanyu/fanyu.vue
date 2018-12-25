@@ -133,7 +133,7 @@ export default {
     this.wrapperHeight =
       document.documentElement.clientHeight -
       this.$refs.wrapper.getBoundingClientRect().top;
-      console.log(this.wrapperHeight)
+      // console.log(this.wrapperHeight)
   }
 }
 
