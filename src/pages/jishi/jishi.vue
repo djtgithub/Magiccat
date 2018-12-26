@@ -1,5 +1,7 @@
 <template lang="html">
-  <div style="background: #fff;" ref="wrapper" class="main-body" >
+  <div style="background: #fff;" ref="wrapper" class="main-body newsList"  v-infinite-scroll="loadMore"
+  infinite-scroll-disabled="loading"
+  infinite-scroll-distance="10"  >
     <div class="home_header">
       <div class="home_header_l">
         <i class="iconfont iconmap">&#xe60f;</i>
@@ -17,15 +19,15 @@
         </div>
       </div>
     </div>
-     <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore" :autoFill="isAutoFill">
+<!--      <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore" :autoFill="isAutoFill"> -->
     <div class="home_swiper">
       <mt-swipe :auto="2000">
         <mt-swipe-item v-for="item in Carousel">
-          <img :src="item.imgUrl"/>
+          <img :src="item.imgUrl" v-lazy="item.imgUrl"/>
         </mt-swipe-item>
       </mt-swipe>
     </div>
-    <div class="jishi_tit">
+    <div class="jishi_tit"> 
       集市广场
     </div>
     <div class="select">
@@ -41,7 +43,7 @@
         <ul>
           <li v-for="item in Content" :id="item.gid">
             <router-link :to="{name:'Detail',params:{id:item.gid}}">
-            <div class="col l"><img :src="item.imgUrl" /> </div>
+            <div class="col l"><img :src="item.imgUrl"  v-lazy="item.imgUrl"/> </div>
               <div class="col r">
                 <div class="bigtit">{{item.name}}<span v-text="item.attributes"></span></div>
                 <div class="numbering" v-text="item.Numbering">19840630</div>
@@ -54,7 +56,7 @@
           </li>
         </ul>
       </div>
-    </mt-loadmore>
+    <!-- </mt-loadmore> -->
   </div>
 </template>
 <script>
@@ -72,40 +74,49 @@ export default {
       courrentPage: 0,
       Carousel: [],
       Content: [],
-      num: 2,
-      Contentlength: 0
+      num: 3,
+      Contentlength: 0,
+
     }
   },
   methods: {
     changClass: function(isActive, str) {
-      this.allLoaded = false;
+      // this.allLoaded = false;
       this.num=2;
       this.loadjishi(str);
     },
-    loadTop() {
-      this.loadFrist();
-    },
+    // loadTop() {
+    //   this.loadFrist();
+    // },
     // 上拉加载
-    loadBottom() {
-      this.loadMore();
-    },
-    // 下来刷新加载
-    loadFrist() {
-      this.num = 2;
-      this.loadjishi(2);
-      this.allLoaded = false;
-    },
+    // loadBottom() {
+    //   this.loadMore();
+    // },
+    // // 下来刷新加载
+    // loadFrist() {
+    //   this.num = 2;
+    //   this.loadjishi(2);
+    //   this.allLoaded = false;
+    // },
     // 加载更多
     loadMore() {
-      if (this.num++ >= this.Contentlength) {
-        this.allLoaded = true; // 若数据已全部获取完毕
+       this.loading = true;
+       // if(this.Content.length==this.Contentlength) {
+       //  return false;
+       // }
+
+      if (this.num> 10) {
+        this.loading = false;
+        // this.allLoaded = true; // 若数据已全部获取完毕
         this.$toast({
           message: '没有更多数据了',
           position: 'bottom',
-          duration: 5000
+          duration: 1000
         })
+         this.loading = false;
+         return false;
       }
-      this.$refs.loadmore.onBottomLoaded();
+      // this.$refs.loadmore.onBottomLoaded();
       this.loadjishi(this.num++);
     },
     //获取集市广场内容
@@ -116,7 +127,7 @@ export default {
         method: 'get'
       }).then(function(res) {
         if (res.status == 200 && res.statusText == 'OK') {
-          that.$refs.loadmore.onTopLoaded();
+          // that.$refs.loadmore.onTopLoaded();
           that.Content = res.data;
         }
       }).catch(function(rep) {
@@ -125,7 +136,7 @@ export default {
     }
   },
   created() {
-    this.loadFrist();
+    // this.loadFrist();
     //获取轮播图
     var that = this;
     
@@ -139,8 +150,6 @@ export default {
     }).catch(function(rep) {
       that.$toast((rep.response.data).error.message);
     });
-    //获取集市广场内容
-    this.loadjishi(this.num);
     //统计内容的数据length
     fetch({
       url: 'jishi_content/count',
@@ -150,6 +159,9 @@ export default {
         that.Contentlength = res.data.count;
       }
     })
+    //获取集市广场内容
+    this.loadjishi(this.num);
+    
   },
   mounted() {
     // 父控件要加上高度，否则会出现上拉不动的情况
@@ -318,7 +330,7 @@ ul li {
 }
 
 .jishi_cont {
-  padding: 0 0.21rem 0.2rem;
+  padding: 0 0.21rem 1.5rem;
 }
 
 .jishi_cont ul li {
@@ -408,5 +420,15 @@ ul li {
   border: 1px solid #ccc;
   margin-right: 0.14rem;
 }
+.newsList{
+  max-height:100vh;
+  overflow-y:auto;
+}
+image[lazy=loading] {
+  width: 40px;
+  height: 300px;
+  margin: auto;
+}
+
 
 </style>

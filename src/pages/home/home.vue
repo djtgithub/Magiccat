@@ -1,8 +1,8 @@
 <template lang="html">
   <div>
-    <transition :name="transitionName" mode="in-out"> 
+    <!-- <transition :name="transitionName" mode="in-out">  -->
       <router-view class="child-view" ></router-view>
-    </transition  > 
+    <!-- </transition  >  -->
 
     <Tabbar></Tabbar>
   </div>

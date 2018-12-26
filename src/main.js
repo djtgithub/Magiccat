@@ -18,6 +18,15 @@ Vue.use(Mint);
 import { Swipe, SwipeItem } from 'mint-ui';
 Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);
+
+//图片懒加载
+import { Lazyload } from 'mint-ui';
+Vue.use(Lazyload);
+
+//无限加载数据
+import { InfiniteScroll } from 'mint-ui';
+Vue.use(InfiniteScroll);
+
 Vue.config.productionTip = false;
 
 //引入公共加密js

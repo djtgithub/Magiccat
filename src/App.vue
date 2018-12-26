@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <!-- <Header ></Header> -->
-    <transition :name="transitionName" mode="in-out"> 
+    <!-- <transition :name="transitionName" mode="in-out">  -->
         <router-view class="child-view"/>  
-    </transition>
+    <!-- </transition> -->
     <Yindao v-if="this.$store.state.app.loading==='true'"></Yindao>
   </div>
 </template>
