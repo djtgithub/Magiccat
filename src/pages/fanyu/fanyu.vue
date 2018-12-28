@@ -1,49 +1,53 @@
 <template lang="html">
-  <div style="background: #fff;" ref="wrapper" class="main-body" >
-    <div class="home_header">
-      <div class="home_header_l">
-        <i class="iconfont iconmap">&#xe60f;</i>
-        <span class="maptxt">北京</span>
-        <i class="iconfont xiangxiajiantou">&#xe673;</i>
-      </div>
-      <div class="home_header_r">
-        <div class="page-search">
-          <div class="mint-searchbar">
-            <div class="mint-searchbar-inner"><i class="mintui mintui-search"></i> <input type="search" placeholder="搜索" class="mint-searchbar-core"></div>
-            <a class="mint-searchbar-cancel" style="display: none;">取消</a>
+  <keep-alive>
+    <div style="background: #fff;" ref="wrapper" class="main-body newsList" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+      <div class="home_header">
+        <div class="home_header_l">
+          <i class="iconfont iconmap">&#xe60f;</i>
+          <span class="maptxt">北京</span>
+          <i class="iconfont xiangxiajiantou">&#xe673;</i>
+        </div>
+        <div class="home_header_r">
+          <div class="page-search">
+            <div class="mint-searchbar">
+              <div class="mint-searchbar-inner"><i class="mintui mintui-search"></i> <input type="search" placeholder="搜索" class="mint-searchbar-core"></div>
+              <a class="mint-searchbar-cancel" style="display: none;">取消</a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="jishi_tit">
-      集市广场
-    </div>
-    <div class="select">
-      <ul>
-        <li :class="{active:isActive==0}" @click="changClass(isActive=0,0)">稀有度</li>
-        <li :class="{active:isActive==1}" @click="changClass(isActive=1,4)">价格</li>
-        <li :class="{active:isActive==2}" @click="changClass(isActive=2,4)">时间</li>
-        <li class="bdl">筛选<i class="iconfont">&#xe611;</i></li>
-      </ul>
-    </div>
-    <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore" :autoFill="isAutoFill">
-      <div class="jishi_cont">
-        <ul>
-          <li v-for="item in Content">
-            <div class="col l"><img :src="item.imgUrl" /> </div>
-              <div class="col r">
-                <div class="bigtit">{{item.name}}<span v-text="item.attributes"></span></div>
-                <div class="numbering" v-text="item.Numbering">19840630</div>
-                <div class="price">{{item.money}}猫币</div>
-                <div class="label">
-                  <span v-for="lable in item.label">{{lable}}</span>
-                </div>
-              </div>
-          </li>
-        </ul>
+      <div ref="header" :class="{fixed:isclass}">
+        <div class="jishi_tit">
+          集市广场
+        </div>
+        <div class="select">
+          <ul>
+            <li :class="{active:isActive==0}" @click="changClass(isActive=0,0)">稀有度</li>
+            <li :class="{active:isActive==1}" @click="changClass(isActive=1,4)">价格</li>
+            <li :class="{active:isActive==2}" @click="changClass(isActive=2,4)">时间</li>
+            <li class="bdl">筛选<i class="iconfont">&#xe611;</i></li>
+          </ul>
+        </div>
       </div>
-    </mt-loadmore>
-  </div>
+      <mt-loadmore :top-method="loadTop" ref="loadmore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+        <div class="jishi_cont">
+          <ul>
+            <li v-for="item in Content">
+              <div class="col l"><img :src="item.imgUrl" /> </div>
+                <div class="col r">
+                  <div class="bigtit">{{item.name}}<span v-text="item.attributes"></span></div>
+                  <div class="numbering" v-text="item.Numbering">19840630</div>
+                  <div class="price">{{item.money}}猫币</div>
+                  <div class="label">
+                    <span v-for="lable in item.label">{{lable}}</span>
+                  </div>
+                </div>
+            </li>
+          </ul>
+        </div>
+      </mt-loadmore>
+    </div>
+  </keep-alive>
 </template>
 <script>
 import fetch from '../../utils/fetch';
@@ -58,24 +62,24 @@ export default {
       isAutoFill: false,
       wrapperHeight: 0,
       courrentPage: 0,
+      Carousel: [],
       Content: [],
-      num: 4,
-      Contentlength: 0
+      num: 3,
+      Contentlength: 0,
+      flag: false,
+      isclass: false
+
     }
   },
   methods: {
     changClass: function(isActive, str) {
-       this.allLoaded = false;
+      this.num = 3;
+      this.flag = false;
       this.loadjishi(str);
     },
     loadTop() {
       this.loadFrist();
     },
-    // 上拉加载
-    loadBottom() {
-      this.loadMore();
-    },
-    // 下来刷新加载
     loadFrist() {
       this.num = 4;
       this.loadjishi(this.num);
@@ -83,17 +87,44 @@ export default {
     },
     // 加载更多
     loadMore() {
-      if (this.num++ >= this.Contentlength) {
-        this.allLoaded = true; // 若数据已全部获取完毕
+      this.loading = true;
+      if (this.num >= this.Contentlength) {
+        this.loading = false;
+        this.flag = true;
+        // 若数据已全部获取完毕
         this.$toast({
           message: '没有更多数据了',
           position: 'bottom',
-          duration: 5000
+          duration: 1000
         })
+        this.loading = false;
+        return false;
       }
-      this.$refs.loadmore.onBottomLoaded();
-      this.loadjishi(this.num++);
+      this.loadjishi(this.num += 1);
     },
+    // 上拉加载
+    // loadBottom() {
+    //   this.loadMore();
+    // },
+    // // 下来刷新加载
+    // loadFrist() {
+    //   this.num = 4;
+    //   this.loadjishi(this.num);
+    //   this.allLoaded = false;
+    // },
+    // // 加载更多
+    // loadMore() {
+    //   if (this.num++ >= this.Contentlength) {
+    //     this.allLoaded = true; // 若数据已全部获取完毕
+    //     this.$toast({
+    //       message: '没有更多数据了',
+    //       position: 'bottom',
+    //       duration: 5000
+    //     })
+    //   }
+    //   this.$refs.loadmore.onBottomLoaded();
+    //   this.loadjishi(this.num++);
+    // },
     //获取集市广场内容
     loadjishi(num) {
       var that = this;
@@ -108,17 +139,33 @@ export default {
       }).catch(function(rep) {
         that.$toast((rep.response.data).error.message);
       });
+    },
+    handleScroll() {
+      var that = this;
+      //滚动条在y轴上的滚动距离
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+      //文档的总高度
+      var documentScrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+      //浏览器窗口的高度
+      var getWindowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+      if (scrollTop > 10) {
+        that.isclass = true;
+      } else {
+        that.isclass = false;
+      }
+
+      if (scrollTop + getWindowHeight == documentScrollHeight) {
+        that.loadMore();
+      }
     }
   },
   created() {
     this.loadFrist();
     //获取轮播图
     var that = this;
-   
-  
     //获取集市广场内容
     this.loadjishi(this.num);
-     //统计内容的数据length
+    //统计内容的数据length
     fetch({
       url: 'jishi_content/count',
       method: 'get'
@@ -129,22 +176,16 @@ export default {
     })
   },
   mounted() {
-    // 父控件要加上高度，否则会出现上拉不动的情况
-    this.wrapperHeight =
-      document.documentElement.clientHeight -
-      this.$refs.wrapper.getBoundingClientRect().top;
-      // console.log(this.wrapperHeight)
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  destroyed() {
+    window.removeEventListener('scroll', this.handleScroll)
   }
 }
 
 </script>
 <style scoped>
 @import '../../assets/icon/iconfont.css';
-
-.main-body {
-  /* 加上这个才会有当数据充满整个屏幕，可以进行上拉加载更多的操作 */
-  overflow: scroll;
-}
 
 * {
   margin: 0;
@@ -155,6 +196,8 @@ export default {
 .home_header {
   height: 0.78rem;
   overflow: hidden;
+  width: 100%;
+  background: #fff;
 }
 
 .home_swiper {
@@ -382,6 +425,34 @@ ul li {
   height: 0.28rem;
   border: 1px solid #ccc;
   margin-right: 0.14rem;
+}
+
+.newsList {
+  max-height: 100vh;
+  /* overflow-y: auto; */
+}
+
+.fixed {
+  position: fixed;
+  z-index: 9;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+  background: #fff;
+  top: 0;
+  transition: 1s linear;
+  /* 过渡属性 */
+  transition-property: width;
+  /*all:表示所有属性*/
+  /* 过渡属性,必须设置过渡时间才会生效 */
+  transition-duration: 1s;
+  /* 过渡持续时间 */
+  transition-timing-function: ease-out;
+  /* 动画变幻速度 ease:减速(默认)  linear:匀速  ease-in:加速 ease-out:减速  ease-in-out:先加速后减速 */
+  transition-delay: 1s;
+  /* 动画延迟 */
+  transition: all 1s ease-in-out 0s;
+  /* 常用的简写方式 */
+
 }
 
 </style>

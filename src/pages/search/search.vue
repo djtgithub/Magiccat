@@ -35,7 +35,10 @@ export default {
       this.$router.go(-1);
     },
     serach: function() {
-      if (this.inputtxt == '') return false;
+      if (this.inputtxt == '') {
+         this.wrap="请输入您要找的内容";
+        return false;
+      }
       var that = this;
       var filter = {
         "where": {
@@ -61,6 +64,8 @@ export default {
         that.$toast((rep.response.data).error.message);
       });
     }
+  },created(){
+    this.wrap="请输入您要找的内容";
   }
 
 }

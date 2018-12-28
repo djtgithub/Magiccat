@@ -1,7 +1,9 @@
 <template lang="html">
   <div>
     <!-- <transition :name="transitionName" mode="in-out">  -->
-      <router-view class="child-view" ></router-view>
+      <keep-alive>
+      <router-view class="child-view"   v-if="$route.meta.keepAlive"></router-view>
+      </keep-alive>
     <!-- </transition  >  -->
 
     <Tabbar></Tabbar>

@@ -2,18 +2,36 @@
   <div>
     <div data-v-7bcd8dab="">
       <header data-v-7bcd8dab="" class="mint-header" style="font-size: 0.3rem !important;">
-        <div class="mint-header-button is-left"  @click="goback"><a data-v-7bcd8dab=""><button data-v-7bcd8dab="" class="mint-button mint-button--default mint-button--normal"><span class="mint-button-icon"><i class="mintui mintui-back"></i></span> <label class="mint-button-text"></label></button></a></div> <h1 class="mint-header-title">详情页</h1>
+        <div class="mint-header-button is-left" @click="goback"><a data-v-7bcd8dab=""><button data-v-7bcd8dab="" class="mint-button mint-button--default mint-button--normal"><span class="mint-button-icon"><i class="mintui mintui-back"></i></span> <label class="mint-button-text"></label></button></a></div> <h1 class="mint-header-title" v-text="Content[0].name">详情页</h1>
         <div class="mint-header-button is-right"></div>
       </header>
     </div>
-    <!-- <router-view></router-view>   -->
-    
     <div class="home_swiper">
       <mt-swipe :auto="2000">
         <mt-swipe-item v-for="item in Content[0].detailCourse">
           <img :src="item" v-lazy="item"/>
         </mt-swipe-item>
       </mt-swipe>
+    </div>
+    <div>
+      <p>价格￥{{Content[0].moeny}}</p>
+      <p>说明{{Content[0].txt}}</p>
+      <p>介绍：{{Content[0].introduction}}</p>
+    </div>
+
+
+
+
+
+
+
+
+    <div class="tabbar">
+      <ul>
+        <li><a href="">加入购物车</a></li>
+        <li><a href="">立即购买</a></li>
+      </ul>
+
     </div>
   </div>
 </template>
@@ -31,12 +49,16 @@ export default {
     console.log(this.$route.params.id)
     let id = this.$route.params.id;
     if (id != '' && id != undefined) {
+      this.$store.commit('SET_GID', id);
+      this.Cookies.set('gid', id);
       this.getDetail(id);
-
+    } else {
+      var gid = this.store.state.user.gid;
+      this.getDetail(gid);
     }
   },
   methods: {
-     goback: function() {
+    goback: function() {
       this.$router.go(-1);
     },
     getDetail: function(id) {
@@ -49,7 +71,7 @@ export default {
         url: 'jishi_detail?filter=' + encodeURIComponent(JSON.stringify(filter)),
         method: 'get'
       }).then(function(res) {
-        console.log(JSON.stringify(res))
+        console.log('sdasd' + JSON.stringify(res))
         if (res.status == 200 && res.statusText == 'OK') {
           that.Content = res.data;
         }
@@ -178,5 +200,33 @@ export default {
   background: blue !important;
   opacity: 1;
 }
-
+.tabbar{
+  width: 100%;
+  height: 1rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: red;
+}
+ .tabbar ul{
+  display: flex;
+  height: 100%;
+ }
+.tabbar ul li{
+  flex: 1;
+  height: 100%;
+}
+.tabbar ul li a{
+  height: 100%;
+  align-items: center;
+  display: inline-flex;
+  color: #fff;
+  font-size: 0.3rem;
+}
+.tabbar ul li:nth-child(1){
+  background-image:linear-gradient(to right, #FFC500, #FF9402)
+}
+.tabbar ul li:nth-child(2){
+      background-image: linear-gradient(to right, #FF7A00, #FE560A);
+}
 </style>

@@ -4,6 +4,7 @@ const user = {
 	state:{
         token:Cookies.get('Token'),
         login:Cookies.get('Login'),
+        gid:Cookies.get('gid')
 	},
 
 	//状态值的改变方法，操作值
@@ -18,6 +19,9 @@ const user = {
 		SET_LOGIN:(state,login)=>{
 			state.login=login; //header
 		},
+		SET_GID:(state,gid)=>{
+			state.gid=gid; //header
+		}
 		
 	},actions:{
 		SET_TOKEN:({commit},loading)=>{
@@ -25,6 +29,9 @@ const user = {
 		},
 		SET_LOGIN:({commit},header)=>{
 			commit('SET_LOGIN',login)
+		},
+		SET_GID:({commit},gid)=>{
+			commit('SET_GID',gid)
 		}
 	}
 }

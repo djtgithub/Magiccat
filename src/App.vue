@@ -1,8 +1,14 @@
 <template>
   <div id="app">
     <!-- <Header ></Header> -->
+      <keep-alive v-if="$route.meta.keepAlive">
     <!-- <transition :name="transitionName" mode="in-out">  -->
         <router-view class="child-view"/>  
+        </keep-alive>
+
+        <router-view v-if="!$route.meta.keepAlive">
+    <!-- 这里加载不被缓存的视图组件，比如 Edit！ -->
+</router-view>
     <!-- </transition> -->
     <Yindao v-if="this.$store.state.app.loading==='true'"></Yindao>
   </div>
@@ -100,6 +106,7 @@ ul,li{
   transition:all 0.5s ;
   z-index: 9999;
 }
+
 
 
 </style>

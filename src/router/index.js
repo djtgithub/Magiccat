@@ -34,6 +34,7 @@ const router = new Router({
             path:'/',
             component:Jishi,
             redirect:'/jishi',
+            meta:{index:0,keepAlive:true,requireLogin:true},
 
         },
            {
@@ -77,7 +78,8 @@ const router = new Router({
     {
       path:'/search',
       name:'Search',
-      component:Search
+      component:Search,
+      meta:{keepAlive:true},
     },
     {
       path: '/home',
