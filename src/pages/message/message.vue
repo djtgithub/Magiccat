@@ -223,4 +223,18 @@ li {
 .mint-header-title{
   font-size: 0.3rem !important;
 }
+	.mint-header {
+		background: #fff;
+		color: #ccc;
+		height: 0.9rem;
+	}
+	
+	.mint-header-button.is-left{
+		text-indent: 0.3rem;
+	}
+	.mint-header-button.is-left i{
+		font-size: 0.3rem;
+	}
+	
+
 </style>

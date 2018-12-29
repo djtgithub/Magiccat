@@ -4,7 +4,8 @@
       <div class="shezhi"><i class="iconfont">&#xe827;</i></div>
       <div class="wo_headerbox">
       	<div class="photo">
-      		<img src="http://c.hiphotos.baidu.com/image/h%3D300/sign=d4c9df02d7b44aed464eb8e4831d876a/bf096b63f6246b605ee26e3ce6f81a4c500fa28e.jpg" alt="">
+          <img src="../../assets/register/photo.jpg" />
+      		<!-- <img src="http://c.hiphotos.baidu.com/image/h%3D300/sign=d4c9df02d7b44aed464eb8e4831d876a/bf096b63f6246b605ee26e3ce6f81a4c500fa28e.jpg" alt=""> -->
       	</div>
       	<div style="color:#232323; line-height: 0.46rem;font-size:0.28rem;" v-text="this.store.state.user.token"></div>
       	<div>18893462426</div>

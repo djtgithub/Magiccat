@@ -4,7 +4,8 @@ const user = {
 	state:{
         token:Cookies.get('Token'),
         login:Cookies.get('Login'),
-        gid:Cookies.get('gid')
+        gid:Cookies.get('gid'),
+				address:Cookies.get('address') || '北京'
 	},
 
 	//状态值的改变方法，操作值
@@ -21,6 +22,9 @@ const user = {
 		},
 		SET_GID:(state,gid)=>{
 			state.gid=gid; //header
+		},
+		SET_ADDRESS:(state,address)=>{
+			state.address=address;
 		}
 		
 	},actions:{
@@ -32,6 +36,9 @@ const user = {
 		},
 		SET_GID:({commit},gid)=>{
 			commit('SET_GID',gid)
+		},
+		SET_ADDRESS:({commit},address)=>{
+			commit('SET_ADDRESS',address)
 		}
 	}
 }

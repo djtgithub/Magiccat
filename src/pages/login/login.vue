@@ -6,7 +6,8 @@
     <div class="loginwrap">
       <div class="photo">
         <div class="phpoto_img">
-          <img src="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=2527767901,3131898055&fm=58&bpow=720&bpoh=1080" />
+          <img src="../../assets/register/photo.jpg" />
+          <!-- <img src="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=2527767901,3131898055&fm=58&bpow=720&bpoh=1080" /> -->
         </div>
         </div>
         <div class="input_col">
