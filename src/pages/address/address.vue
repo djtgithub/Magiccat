@@ -26,7 +26,7 @@
 		name: 'app',
 		data() {
 			return {
-				
+
 				title: 'web秀 - VUE开发一个组件——Vue PC城市选择',
 				showCity: false,
 				dataList: [{
@@ -4080,14 +4080,11 @@
 				if (str != '') {
 					//字母查找
 					str = str.toUpperCase();
-					// console.log(str + "里全是字母！");
 					let dataList = this.dataList;
 					that.newdataList.length = 0;
 					dataList.forEach(function(value, index, array) {
-						// console.log(dataList[index].hasOwnProperty('airportCode'));
 						if (dataList[index].hasOwnProperty('cityInfo') === true && (dataList[index].hasOwnProperty('cityName')) ===
 							true) {
-							// console.log((dataList[index].airportCode))
 							if ((dataList[index].cityInfo[0]).indexOf(str) > -1 || (dataList[index].cityName).indexOf(str) > -1) {
 								that.newdataList.push(dataList[index]);
 							}
@@ -4095,16 +4092,16 @@
 					})
 					this.dataList = this.newdataList;
 					console.log((this.newdataList).length)
-					if(this.newdataList.length<1){
-						this.showCity=true;
-						this.newdataLis=[];
-						// this.dataList=[];
+					if (this.newdataList.length < 1) {
+						this.showCity = true;
+						this.newdataLis = [];
 					}
 				} else {
 					this.dataList = this.olddataList;
-					this.showCity=false;
+					this.showCity = false;
 				}
-			},fnselect(val){
+			},
+			fnselect(val) {
 				this.$router.push('/');
 				this.$store.commit('SET_ADDRESS', val);
 				this.Cookies.set('address', val);
