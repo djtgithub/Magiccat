@@ -64,6 +64,13 @@ new Vue({
       
     },
     '$route':function(to){
+			
+			if(this.$route.query.stuts=='true' ||this.$route.query.stuts==true ){
+				this.$route.query.stuts=true;
+			}else{
+				this.$route.query.stuts=false;
+			}
+			
       // if(to.meta.header==true){
       //   // alert(1)
       //   this.$store.commit('SET_HEADER',true);
