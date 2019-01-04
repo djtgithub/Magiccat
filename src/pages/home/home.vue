@@ -5,7 +5,6 @@
       <router-view class="child-view"   v-if="$route.meta.keepAlive"></router-view>
       </keep-alive>
     <!-- </transition  >  -->
-
     <Tabbar></Tabbar>
   </div>
 </template>

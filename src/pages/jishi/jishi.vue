@@ -43,7 +43,7 @@
           <ul>
             <li v-for="item in Content" :id="item.gid">
               <router-link :to="{name:'Detail',params:{id:item.gid}}">
-                <div class="col l"><img :src="item.imgUrl" v-lazy="item.imgUrl" /> </div>
+                <div class="col l"><img :src="item.imgUrl" /> </div>
                   <div class="col r">
                     <div class="bigtit">{{item.name}}<span v-text="item.attributes"></span></div>
                     <div class="numbering" v-text="item.Numbering">19840630</div>
@@ -157,6 +157,8 @@ export default {
     }
   },
   created() {
+    console.log(this)
+    console.log(sha1)
     // this.loadFrist();
     //获取轮播图
     var that = this;
@@ -236,6 +238,10 @@ export default {
   position: relative;
 }
 
+ .home_header_l a{
+  color: #666;
+ }
+
 
 .iconmap {
   position: absolute;
@@ -255,6 +261,9 @@ export default {
   white-space: nowrap;
   width: 0.5rem;
   color: #666;
+}
+.maptxt a i.iconfont{
+   color: #666;
 }
 
 .xiangxiajiantou {
@@ -518,6 +527,12 @@ image[lazy=loading] {
 }
 
 .iswhite {
+  color: #fff !important;
+}
+.iswhite a .maptxt{
+  color: #fff;
+}
+.iswhite a{
   color: #fff;
 }
 

@@ -43,6 +43,8 @@ const router = new Router({
 				{
 					path: 'jishi',
 					component: Jishi,
+
+					
 					meta: {
 						index: 0,
 						keepAlive: true,

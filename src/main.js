@@ -47,12 +47,22 @@ new Vue({
   methods:{
     getPath(){
    }
+
+
+
+
+   
   },
   watch: {
 
 　$route(to, from) {
 	console.log(to.meta.index)
-      //如果to索引大于from索引,判断为前进状态,反之则为后退状态
+      //如果to索引大于
+      //
+      //
+      //
+      //
+      //rom索引,判断为前进状态,反之则为后退状态
       if(to.meta.index > from.meta.index){
 
         //设置动画名称

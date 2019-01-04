@@ -11,6 +11,7 @@ axios.defaults.baseURL = 'https://d.apicloud.com/mcm/api/'; //配置请求地址
 
 // requese 拦截器
 axios.interceptors.request.use(config => {
+  
   var now = Date.now();
   var appkey = sha1("A6082069061619" + 'UZ' + "04C51A3A-DA51-356A-9B37-C10E9036FBDE" + 'UZ' + now) + '.' + now;
   config.headers = {

@@ -30,7 +30,7 @@
 
 		<div class="tabbar">
 			<ul>
-				<li><a href="">加入购物车</a></li>
+				<li><a @click="addcartshopping">加入购物车</a></li>
 				<li><a href="">立即购买</a></li>
 			</ul>
 
@@ -91,8 +91,67 @@
 					console.log(rep);
 					that.$toast((rep.response.data).error.message);
 				});
+			},addcartshopping:function(){
+				const that = this;
+				 
+				  var filter = {
+			        "where": {
+			          "gid":  "5c21f4b70cf9f25c7ee90539"
+			        }
+			      }
+				//加入购物车
+				      return fetch({
+				        url: 'shopping_cart?filter=' + encodeURIComponent(JSON.stringify(filter)),
+				        method: 'get',
+				      }).then(function(res) {
 
+				        if (res.status == 200 && res.statusText == 'OK') {
+				        	
+				        	if(res.data.length!=0){
+				        		//有数据直接修改
+                             that.changeaddcart_shoping();
+				        	}else{
+				        		//没有数据去添加
+				        		that.changeadd();
+				        	}
+				        	console.log(res.data);
+				        	// that.$toast({
+				         //    message: '查找成功',
+				         //    position: 'bottom',
+				         //    duration: 5000
+				         //  });
+				          // that.$toast({
+				          //   message: '添加成功',
+				          //   position: 'bottom',
+				          //   duration: 5000
+				          // });
+				          //注册成功后 跳转到登录页面
+				        } else {
+				          
+				            that.$toast('添加失败');
+				          
+				        }
 
+				      }).catch(function(rep) {
+				        that.$toast((rep.response.data).error.message);
+				      });
+			},changeaddcart_shoping:function(){
+				const that = this;
+				 const data = {
+								"count":30,
+								"_method":"put"
+							  }
+                      return fetch({
+				        url: 'shopping_cart/5c21f4b70cf9f25c7ee90539',
+				        method: 'post',
+				        data:data
+				      }).then(function(res) {
+                             console.log(res.data);
+
+				      }).catch(function(rep) {
+				        that.$toast((rep.response.data).error.message);
+				      });
+			},changeadd:function(){
 
 			}
 		}
