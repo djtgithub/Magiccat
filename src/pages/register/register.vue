@@ -113,7 +113,7 @@ export default {
       }
       //登录请求
       return fetch({
-        url: 'user',
+        url: 'register',
         method: 'post',
         data
       }).then(function(res) {
