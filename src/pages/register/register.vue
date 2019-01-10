@@ -95,6 +95,7 @@ export default {
       this.$router.go(-1);
     },
     login() {
+     
       const that = this;
       //登录验证
       if (this.logindata.username == '' || this.logindata.password == '' || this.logindata.email == '') {
@@ -117,22 +118,21 @@ export default {
         method: 'post',
         data
       }).then(function(res) {
-
-        if (res.status == 200 && res.statusText == 'OK') {
+        console.log(JSON.stringify(res))
+        if (res.data.code == 200) {
           that.$toast({
-            message: '注册成功',
+            message: res.msg,
             position: 'bottom',
             duration: 5000
           });
           //注册成功后 跳转到登录页面
           that.$router.push({ path: '/login' });
-        } else {
-          if ((res.data).error.status == '202') {
-            that.$toast('该用户名已经存在');
-          } else {
+        }else if(res.data.code == 202 ) {
+          that.$toast('该用户名已经存在');
+        }else {
             that.$toast('注册失败');
-          }
         }
+        
 
       }).catch(function(rep) {
         that.$toast((rep.response.data).error.message);
