@@ -126,7 +126,10 @@ export default {
             duration: 5000
           });
           //注册成功后 跳转到登录页面
-          that.$router.push({ path: '/login' });
+          setTimeout(function(){
+             that.$router.push({ path: '/login' });
+          },1000)
+         
         }else if(res.data.code == 202 ) {
           that.$toast('该用户名已经存在');
         }else {

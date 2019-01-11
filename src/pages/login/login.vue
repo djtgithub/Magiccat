@@ -117,8 +117,8 @@ export default {
         method: 'post',
         data
       }).then(function(res) {
-
-        if(res.status == 200 && res.statusText == 'OK') {
+console.log(JSON.stringify(res))
+        if(res.data.code == 200) {
               that.$toast({
                 message: '登录成功',
                 position: 'bottom',
@@ -133,7 +133,7 @@ export default {
 
               that.$router.push({ path: '/Home' });
         } else {
-          that.$toast((res.response.data).error.message);
+          that.$toast((res.data).msg);
         }
 
       }).catch(function(rep) {

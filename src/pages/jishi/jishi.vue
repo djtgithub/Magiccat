@@ -122,14 +122,15 @@ export default {
     loadjishi(num) {
       var that = this;
       fetch({
-        url: 'jishi_content?filter={"where":{},"skip":0,"limit":' + num + '}',
+        // url: 'jishi_content?filter={"where":{},"skip":0,"limit":' + num + '}',
+        url: 'jishi_content',
         method: 'get'
       }).then(function(res) {
 
-        if (res.status == 200 && res.statusText == 'OK') {
+        if (res.data.code == 200 ) {
 
           that.$refs.loadmore.onTopLoaded();
-          that.Content = res.data;
+          that.Content = res.data.data;
         }
       }).catch(function(rep) {
         that.$toast((rep.response.data).error.message);
@@ -167,8 +168,9 @@ export default {
       url: 'Carousel_map',
       method: 'get'
     }).then(function(res) {
-      if (res.status == 200 && res.statusText == 'OK') {
-        that.Carousel = res.data;
+      console.log(JSON.stringify(res))
+      if (res.data.code==200) {
+        that.Carousel = res.data.data;
       }
     }).catch(function(rep) {
       that.$toast((rep.response.data).error.message);
