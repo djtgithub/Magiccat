@@ -40,21 +40,18 @@ export default {
         return false;
       }
       var that = this;
-      var filter = {
-        "where": {
-          "name": { "like": "%" + this.inputtxt + "%" }
-        }
-      }
+      var filter =  this.inputtxt;
+      
       fetch({
-        url: 'jishi_content?filter=' + encodeURIComponent(JSON.stringify(filter)),
+        url: 'search?filter=' + JSON.stringify(filter),
         method: 'get'
       }).then(function(res) {
-        if (res.status == 200 && res.statusText == 'OK') {
-          console.log('sadasd' + JSON.stringify(res))
-          if(res.data.length==0){
+        if (res.data.code == 200) {
+          console.log('sadasd' + res.data.data.length)
+          if(res.data.data.length==0){
             that.wrap="非常抱歉，没有搜索到您要找的内容";
           }else{
-            that.Content = res.data;
+            that.Content = res.data.data;
             that.wrap="";
           }
           
