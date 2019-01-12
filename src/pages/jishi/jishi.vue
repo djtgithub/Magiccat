@@ -49,7 +49,7 @@
                     <div class="numbering" v-text="item.Numbering">19840630</div>
                     <div class="price">{{item.money}}猫币</div>
                     <div class="label">
-                      <span v-for="lable in item.label">{{lable}}</span>
+                      <span v-for="lable in item.lable">{{lable}}</span>
                     </div>
                   </div>
               </router-link>
@@ -121,16 +121,21 @@ export default {
     //获取集市广场内容
     loadjishi(num) {
       var that = this;
+      var filter={
+        "skip":0,
+        "limit": num 
+      }
       fetch({
         // url: 'jishi_content?filter={"where":{},"skip":0,"limit":' + num + '}',
-        url: 'jishi_content',
+        url: 'jishi_content?filter='+JSON.stringify(filter),
         method: 'get'
       }).then(function(res) {
-
+console.log(res.data.totall);
         if (res.data.code == 200 ) {
 
           that.$refs.loadmore.onTopLoaded();
           that.Content = res.data.data;
+          that.Contentlength = res.data.totall;
         }
       }).catch(function(rep) {
         that.$toast((rep.response.data).error.message);
@@ -175,15 +180,7 @@ export default {
     }).catch(function(rep) {
       that.$toast((rep.response.data).error.message);
     });
-    //统计内容的数据length
-    fetch({
-      url: 'jishi_content/count',
-      method: 'get'
-    }).then(function(res) {
-      if (res.status == 200 && res.statusText == 'OK') {
-        that.Contentlength = res.data.count;
-      }
-    })
+
     //获取集市广场内容
     this.loadjishi(this.num);
   },
