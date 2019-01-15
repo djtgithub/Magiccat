@@ -121,7 +121,7 @@ export default {
         console.log(JSON.stringify(res))
         if (res.data.code == 200) {
           that.$toast({
-            message: res.msg,
+            message: res.data.msg,
             position: 'bottom',
             duration: 5000
           });

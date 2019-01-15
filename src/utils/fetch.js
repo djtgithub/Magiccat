@@ -4,12 +4,13 @@ import Vue from 'vue';
 import qs from 'qs';
 import Cookies from 'js-cookie';
 import { Indicator } from 'mint-ui';
+
 // Vue.$Indicator=Vue.prototype.Indicator = Indicator;
 
 axios.defaults.timeout = 5000; //超时终止请求
 // axios.defaults.baseURL = 'https://d.apicloud.com/mcm/api/'; //配置请求地址
 // axios.defaults.baseURL = 'http://localhost:3001/'
-axios.defaults.baseURL = 'http://192.168.1.108:3001/'
+axios.defaults.baseURL = 'http://192.168.109.231:3001/'
 axios.defaults.withCredentials = true
 // requese 拦截器
 axios.interceptors.request.use(config => {
@@ -41,16 +42,18 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(response => {
 
   //关闭loading
-
     Indicator.close();
- 
   return response;
 
 }, error => {
+   Indicator.close();
 
+Indicator.open('网络不佳，稍后再试...');
+setTimeout(function(){
+  Indicator.close();
+},500)
 
-    Indicator.close();
-
+    console.log(error)
 
   return Promise.reject(error);
 

@@ -117,12 +117,11 @@ export default {
         method: 'post',
         data
       }).then(function(res) {
-console.log(JSON.stringify(res))
         if(res.data.code == 200) {
               that.$toast({
-                message: '登录成功',
+                message: '登录成功,正在跳转……',
                 position: 'bottom',
-                duration: 5000
+                duration: 3000
               });
               //登录成功后 登录信息与状态的处理
               that.$store.commit('SET_TOKEN', that.logindata.username);
@@ -130,8 +129,10 @@ console.log(JSON.stringify(res))
 
               that.$store.commit('SET_LOGIN', true);
               that.Cookies.set('Login', true);
-
-              that.$router.push({ path: '/Home' });
+              setTimeout(function(){
+                that.$router.push({ path: '/Home' });
+              },3000)
+              
         } else {
           that.$toast((res.data).msg);
         }

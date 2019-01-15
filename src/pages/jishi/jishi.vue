@@ -90,10 +90,12 @@ export default {
       // this.allLoaded = false;
       this.num = 2;
       this.flag = false;
+      this.Content = '';
       this.loadjishi(str);
     },
     loadTop() {
       this.loadFrist();
+      this.flag = false;
     },
     loadFrist() {
       this.num = 4;
@@ -104,6 +106,7 @@ export default {
     loadMore() {
       // console.log(this.Contentlength);
       this.loading = true;
+      console.log(this.num);
       if (this.num >= this.Contentlength) {
         this.loading = false;
         this.flag = true;
@@ -115,6 +118,8 @@ export default {
         })
         this.loading = false;
         return false;
+      }else{
+         this.flag = false;
       }
       this.loadjishi(this.num += 1);
     },
@@ -130,15 +135,14 @@ export default {
         url: 'jishi_content?filter='+JSON.stringify(filter),
         method: 'get'
       }).then(function(res) {
-console.log(res.data.totall);
         if (res.data.code == 200 ) {
-
           that.$refs.loadmore.onTopLoaded();
           that.Content = res.data.data;
           that.Contentlength = res.data.totall;
         }
       }).catch(function(rep) {
-        that.$toast((rep.response.data).error.message);
+        console.log(rep)
+        // that.$toast('Network Error');
       });
     },
     handleScroll() {
@@ -163,8 +167,6 @@ console.log(res.data.totall);
     }
   },
   created() {
-    console.log(this)
-    console.log(sha1)
     // this.loadFrist();
     //获取轮播图
     var that = this;
@@ -173,12 +175,11 @@ console.log(res.data.totall);
       url: 'Carousel_map',
       method: 'get'
     }).then(function(res) {
-      console.log(JSON.stringify(res))
       if (res.data.code==200) {
         that.Carousel = res.data.data;
       }
     }).catch(function(rep) {
-      that.$toast((rep.response.data).error.message);
+      // that.$toast((rep.response.data).error.message);
     });
 
     //获取集市广场内容

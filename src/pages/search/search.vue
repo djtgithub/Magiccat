@@ -27,42 +27,40 @@ export default {
     return {
       inputtxt: '',
       Content: {},
-      wrap:''
+      wrap: ''
     }
   },
   methods: {
-     goback: function() {
+    goback: function() {
       this.$router.go(-1);
     },
     serach: function() {
       if (this.inputtxt == '') {
-         this.wrap="请输入您要找的内容";
+        this.wrap = "请输入您要找的内容";
         return false;
       }
       var that = this;
-      var filter =  this.inputtxt;
-      
+      var filter = this.inputtxt;
+
       fetch({
         url: 'search?filter=' + JSON.stringify(filter),
         method: 'get'
       }).then(function(res) {
         if (res.data.code == 200) {
-          console.log('sadasd' + res.data.data.length)
-          if(res.data.data.length==0){
-            that.wrap="非常抱歉，没有搜索到您要找的内容";
-          }else{
+          if (res.data.data.length == 0) {
+            that.wrap = "非常抱歉，没有搜索到您要找的内容";
+          } else {
             that.Content = res.data.data;
-            that.wrap="";
+            that.wrap = "";
           }
-          
-
         }
       }).catch(function(rep) {
         that.$toast((rep.response.data).error.message);
       });
     }
-  },created(){
-    this.wrap="请输入您要找的内容";
+  },
+  created() {
+    this.wrap = "请输入您要找的内容";
   }
 
 }
