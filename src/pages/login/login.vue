@@ -138,7 +138,8 @@ export default {
         }
 
       }).catch(function(rep) {
-          that.$toast((rep.response.data).error.message);
+        console.log(rep)
+          // that.$toast((rep));
       });
 
     }
