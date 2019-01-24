@@ -37,6 +37,7 @@ export default {
     serach: function() {
       if (this.inputtxt == '') {
         this.wrap = "请输入您要找的内容";
+        this.Content = "";
         return false;
       }
       var that = this;

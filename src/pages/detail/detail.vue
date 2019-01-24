@@ -20,11 +20,11 @@
       <p>说明:{{Content.txt}}</p>
       <p>介绍：{{Content.introducion}}</p>
     </div>
-    <div data-v-0e374b47="" class="col r">
-      <div data-v-0e374b47="" class="bigtit">英短虎斑猫<span data-v-0e374b47="">稀有</span></div>
-      <div data-v-0e374b47="" class="numbering">1032200234</div>
-      <div data-v-0e374b47="" class="price">1500猫币</div>
-      <div data-v-0e374b47="" class="label"><span data-v-0e374b47="">第二代</span><span data-v-0e374b47="">0分钟</span><span data-v-0e374b47="">休息中</span></div>
+    <div  class="col r">
+      <div  class="bigtit">英短虎斑猫<span>稀有</span></div>
+      <div  class="numbering">1032200234</div>
+      <div  class="price">1500猫币</div>
+      <div  class="label"><span >第二代</span><span>0分钟</span><span>休息中</span></div>
     </div>
     <div class="tabbar">
       <ul>
@@ -77,7 +77,7 @@ export default {
         url: 'jishi_detail?filter=' + JSON.stringify(filter),
         method: 'get'
       }).then(function(res) {
-        console.log('sdasd' + JSON.stringify(res))
+        console.log('sdasd' + JSON.stringify(res.data.data))
 
         if (res.data.code == 200) {
           that.Content = (res.data).data;

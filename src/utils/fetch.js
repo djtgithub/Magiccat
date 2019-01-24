@@ -10,7 +10,7 @@ import { Indicator } from 'mint-ui';
 axios.defaults.timeout = 5000; //超时终止请求
 // axios.defaults.baseURL = 'https://d.apicloud.com/mcm/api/'; //配置请求地址
 // axios.defaults.baseURL = 'http://localhost:3001/'
-axios.defaults.baseURL = 'http://192.168.109.6:3001/'
+axios.defaults.baseURL = 'http://192.168.109.44:3001/'
 axios.defaults.withCredentials = true
 // requese 拦截器
 axios.interceptors.request.use(config => {
